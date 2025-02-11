@@ -30,7 +30,7 @@ export type MakeAPIRequestRet<
 			hasResponse: true
 			hasError: false
 			statusCode: StatusCode
-			responseData: ResponseJSON<ResponseT, ParamsT, BodyT, QueryT>
+			responseData: ResponseT
 			errorData: undefined
 	  }
 	| {
@@ -96,6 +96,10 @@ export async function makeAPIRequest<
 
 	let fetchResponse: Response | null = null
 	try {
+		console.dir(
+			{ resolvedUrl, requestMethod, bodyParams, customHeaders },
+			{ depth: null },
+		)
 		fetchResponse = await fetch(resolvedUrl, {
 			method: requestMethod,
 			credentials: "include",
@@ -130,12 +134,7 @@ export async function makeAPIRequest<
 			}
 		}
 
-		const responseJson = (await fetchResponse.json()) as ResponseJSON<
-			ResponseT,
-			ParamsT,
-			BodyT,
-			QueryT
-		>
+		const responseJson = (await fetchResponse.json()) as ResponseT
 
 		return {
 			hasResponse: true,

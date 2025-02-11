@@ -9,27 +9,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { getProjectModules } from "@/lib/actions/api"
 import useEvalContext from "@/lib/context/eval"
-import { useQuery } from "@tanstack/react-query"
 import * as React from "react"
 
 export function SelectProjectModule() {
-	const {
-		selectedProject,
-		selectedParser,
-		setSelectedModule,
-		selectedModule,
-	} = useEvalContext()
+	const { setSelectedModule, selectedModule, nodes } = useEvalContext()
 
-	const { data } = useQuery({
-		queryKey: ["project-modules", selectedProject, selectedParser],
-		queryFn: async () =>
-			await getProjectModules(selectedParser, selectedProject || ""),
-		enabled: !!selectedProject && !!selectedParser,
-	})
-
-	const moduleNodes = data?.responseData?.moduleNodes
+	const moduleNodes = nodes?.moduleNodes
 
 	if (!moduleNodes) {
 		return null

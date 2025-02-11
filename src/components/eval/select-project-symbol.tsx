@@ -10,29 +10,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { getProjectSymbols } from "@/lib/actions/api"
 import useEvalContext from "@/lib/context/eval"
-import { useQuery } from "@tanstack/react-query"
 import * as React from "react"
 
 export function SelectProjectSymbol() {
-	const {
-		selectedProject,
-		selectedParser,
-		setSelectedSymbol,
-		selectedSymbol,
-	} = useEvalContext()
+	const { setSelectedSymbol, selectedSymbol, nodes } = useEvalContext()
 
-	const { data } = useQuery({
-		queryKey: ["project-symbols", selectedProject, selectedParser],
-		queryFn: async () =>
-			await getProjectSymbols(selectedParser, selectedProject || ""),
-		enabled: !!selectedProject && !!selectedParser,
-	})
-
-	const symbolNodes = data?.responseData?.symbolNodes
-
-	console.log({ data })
+	const symbolNodes = nodes?.symbolNodes
 
 	if (!symbolNodes) {
 		return null

@@ -52,3 +52,13 @@ export type TGetSummaryResponse = {
 	summarySource: string
 	summaryType: string
 }
+
+export type TNode =
+	| {
+			nodeType: ENode.MODULE
+			nodeData: ModuleNode
+	  }
+	| {
+			nodeType: ENode.SYMBOL
+			nodeData: SymbolNode
+	  }

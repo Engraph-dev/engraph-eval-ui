@@ -114,7 +114,7 @@ export async function getProjectSymbolSummary(
 		TGetSymbolSummaryQueryParams
 	>({
 		requestMethod: "GET",
-		requestUrl: "/parsers/:parser/projects/:project/modules/eval",
+		requestUrl: "/parsers/:parser/projects/:project/symbols/eval",
 		bodyParams: {},
 		urlParams: { parser, project },
 		queryParams: { identifier, path },

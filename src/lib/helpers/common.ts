@@ -11,7 +11,7 @@ export function getLabel(node: TNode | undefined) {
 	if (node.nodeType === ENode.MODULE) {
 		return node.nodeData.modulePath
 	} else if (node.nodeType === ENode.SYMBOL) {
-		return node.nodeData.symbolPath + ": " + node.nodeData.symbolIdentifier
+		return node.nodeData.symbolPath + ":" + node.nodeData.symbolIdentifier
 	}
 	return ""
 }

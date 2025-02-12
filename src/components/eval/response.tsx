@@ -16,9 +16,11 @@ import { useQuery } from "@tanstack/react-query"
 import React, { useEffect, useMemo } from "react"
 
 export default function Response() {
-	const { selectedNode, selectedProject, selectedParser } = useEvalContext()
-	const label = getLabel(selectedNode)
 	const [selectedType, setSelectedType] = React.useState<ESummaryType>()
+	const { selectedNode, selectedProject, selectedParser } = useEvalContext()
+
+	const label = useMemo(() => getLabel(selectedNode), [selectedNode])
+
 	const { data: summaryData, isLoading } = useQuery({
 		queryKey: ["node-summary", selectedNode?.nodeType, label],
 		queryFn: async () => {
@@ -36,8 +38,7 @@ export default function Response() {
 				selectedNode?.nodeData.symbolPath || "",
 			)
 		},
-		enabled:
-			!!selectedNode?.nodeData && !!selectedProject && !!selectedParser,
+		enabled: !!selectedProject && !!selectedParser && !!label,
 	})
 
 	async function sendPreference(type: ESummaryType) {
@@ -80,7 +81,7 @@ export default function Response() {
 		)
 	}
 
-	if (!summaryData?.responseData) {
+	if (!summaryData?.responseData?.summaryPlain) {
 		return <div>Error occurred in loading summary of {label}...</div>
 	}
 

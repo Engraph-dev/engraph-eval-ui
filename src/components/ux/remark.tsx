@@ -1,3 +1,4 @@
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { useEffect } from "react"
 import { useRemark } from "react-remark"
 
@@ -8,7 +9,12 @@ const Remark = ({ markdown }: { markdown: string }) => {
 		setMarkdownSource(markdown)
 	}, [markdown, setMarkdownSource])
 
-	return reactContent
+	return (
+		<ScrollArea className="overflow-x-auto">
+			{reactContent}
+			<ScrollBar orientation="horizontal" />
+		</ScrollArea>
+	)
 }
 
 export default Remark

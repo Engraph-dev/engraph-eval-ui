@@ -96,10 +96,10 @@ export async function makeAPIRequest<
 
 	let fetchResponse: Response | null = null
 	try {
-		console.dir(
-			{ resolvedUrl, requestMethod, bodyParams, customHeaders },
-			{ depth: null },
-		)
+		// console.dir(
+		// 	{ resolvedUrl, requestMethod, bodyParams, customHeaders },
+		// 	{ depth: null },
+		// )
 		fetchResponse = await fetch(resolvedUrl, {
 			method: requestMethod,
 			credentials: "include",

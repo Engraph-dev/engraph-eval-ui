@@ -52,3 +52,23 @@ export type TGetSummaryResponse = {
 	summarySource: string
 	summaryType: string
 }
+
+export type TNode =
+	| {
+			nodeType: ENode.MODULE
+			nodeData: ModuleNode
+	  }
+	| {
+			nodeType: ENode.SYMBOL
+			nodeData: SymbolNode
+	  }
+
+export type TPostPreferenceBody = {
+	preferenceType: string
+	evalId: string
+}
+
+export enum ESummaryType {
+	CONTEXT = "Context",
+	PLAIN = "Plain",
+}

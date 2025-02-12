@@ -52,13 +52,13 @@ export function EvalContextProvider({
 	const [selectedSymbol, setSelectedSymbol] = useState<SymbolNode>()
 
 	const { data: nodes } = useQuery({
-		queryKey: ["project-modules", selectedProject, selectedParser],
+		queryKey: ["project-nodes", selectedProject, selectedParser],
 		queryFn: async () => {
 			const moduleDataPromise = getProjectModules(
 				selectedParser,
 				selectedProject || "",
 			)
-			const symbolDataPromise = await getProjectSymbols(
+			const symbolDataPromise = getProjectSymbols(
 				selectedParser,
 				selectedProject || "",
 			)

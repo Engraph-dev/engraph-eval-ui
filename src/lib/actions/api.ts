@@ -12,6 +12,7 @@ import {
 	TGetProjectModulesResponse,
 	TGetSummaryResponse,
 	TGetSymbolSummaryQueryParams,
+	TPostPreferenceBody,
 } from "@/lib/types/requests"
 
 export async function getSupportedParsers() {
@@ -117,6 +118,18 @@ export async function getProjectSymbolSummary(
 		bodyParams: {},
 		urlParams: { parser, project },
 		queryParams: { identifier, path },
+	})
+
+	return resp
+}
+
+export async function postPreference(evalId: string, preferenceType: string) {
+	const resp = await makeAPIRequest<NoParams, NoParams, TPostPreferenceBody>({
+		requestMethod: "POST",
+		requestUrl: "/prefs",
+		bodyParams: { evalId, preferenceType },
+		urlParams: {},
+		queryParams: {},
 	})
 
 	return resp

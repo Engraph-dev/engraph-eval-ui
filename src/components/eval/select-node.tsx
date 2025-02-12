@@ -14,39 +14,19 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover"
+import { Skeleton } from "@/components/ui/skeleton"
 import useEvalContext from "@/lib/context/eval"
+import { areEqual, getLabel } from "@/lib/helpers/common"
 import { ENode, TNode } from "@/lib/types/requests"
 import { cn } from "@/lib/utils"
 import { Check, ChevronsUpDown } from "lucide-react"
 import * as React from "react"
 
-function areEqual(node1: TNode, node2: TNode) {
-	if (node1.nodeType === ENode.MODULE && node2.nodeType === ENode.MODULE) {
-		return node1.nodeData.modulePath === node2.nodeData.modulePath
-	} else if (
-		node1.nodeType === ENode.SYMBOL &&
-		node2.nodeType === ENode.SYMBOL
-	) {
-		return (
-			node1.nodeData.symbolIdentifier === node2.nodeData.symbolIdentifier
-		)
-	}
-	return false
-}
-
-function getLabel(node: TNode) {
-	if (node.nodeType === ENode.MODULE) {
-		return node.nodeData.modulePath
-	} else if (node.nodeType === ENode.SYMBOL) {
-		return node.nodeData.symbolIdentifier
-	}
-	return ""
-}
-
 export function SelectNode() {
 	const [open, setOpen] = React.useState(false)
 
-	const { nodes, selectedNode, setSelectedNode } = useEvalContext()
+	const { nodes, selectedNode, setSelectedNode, selectedProject } =
+		useEvalContext()
 
 	const items: TNode[] = React.useMemo(
 		() => [
@@ -68,7 +48,13 @@ export function SelectNode() {
 		[items, selectedNode],
 	)
 
-	if (!nodes || !items) return null
+	if (!selectedProject) {
+		return null
+	}
+
+	if (!nodes || !items) {
+		return <Skeleton className="h-9 w-full rounded-lg" />
+	}
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
@@ -76,22 +62,22 @@ export function SelectNode() {
 					variant="outline"
 					role="combobox"
 					aria-expanded={open}
-					className="w-[200px] justify-between"
+					className="w-full justify-between"
 				>
 					{currentItem
 						? getLabel(currentItem)
-						: "Select framework..."}
+						: "Select Module or Symbol..."}
 					<ChevronsUpDown className="opacity-50" />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="w-[200px] p-0">
+			<PopoverContent align="start" className="w-[80svw] p-0">
 				<Command>
 					<CommandInput
-						placeholder="Search framework..."
+						placeholder="Search Module or Symbol..."
 						className="h-9"
 					/>
 					<CommandList>
-						<CommandEmpty>No framework found.</CommandEmpty>
+						<CommandEmpty>No Module or Symbol found.</CommandEmpty>
 						<CommandGroup>
 							{items.map((item, idx) => (
 								<CommandItem

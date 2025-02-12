@@ -62,3 +62,13 @@ export type TNode =
 			nodeType: ENode.SYMBOL
 			nodeData: SymbolNode
 	  }
+
+export type TPostPreferenceBody = {
+	preferenceType: string
+	evalId: string
+}
+
+export enum ESummaryType {
+	CONTEXT = "Context",
+	PLAIN = "Plain",
+}

@@ -1,8 +1,7 @@
 import Response from "@/components/eval/response"
+import { SelectNode } from "@/components/eval/select-node"
 import { SelectParser } from "@/components/eval/select-parser"
 import { SelectProject } from "@/components/eval/select-project"
-import { SelectProjectModule } from "@/components/eval/select-project-module"
-import { SelectProjectSymbol } from "@/components/eval/select-project-symbol"
 import React from "react"
 
 export default function EvalPage() {
@@ -17,8 +16,7 @@ export default function EvalPage() {
 					<SelectProject />
 				</div>
 				<div className="flex items-center gap-4">
-					<SelectProjectModule />
-					<SelectProjectSymbol />
+					<SelectNode />
 				</div>
 				<Response />
 			</div>
